@@ -9,21 +9,23 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-strategy:
-  matrix:
-    Python27:
-      python.version: '2.7'
-
 steps:
+# Checkout the repository
+- checkout: self
+  fetchDepth: 1
+
+# Use Python 2.7
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+    versionSpec: '2.7'
+  displayName: 'Use Python 2.7'
 
+# Run Python script
 - script: |
     python "add.py"
   displayName: 'Run add.py script'
 
+# Inline Python script
 - task: PythonScript@0
   inputs:
     scriptSource: 'inline'
